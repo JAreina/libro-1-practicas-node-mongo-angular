@@ -47,5 +47,10 @@ events
 callback parameter
 
 
+json
+_______________________________
 
+-convertir string de un JSON a objeto JS
+
+             JSON.parse(string)
 
