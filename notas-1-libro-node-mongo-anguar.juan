@@ -42,15 +42,51 @@ npm install ../1-censorify/censura-2.1.0.tgz
 
 ----------------------------
 
+TERMINAL LINUX
+
+ejecutar archivo js :
+
+$ node nombreArchivo.js
+
+
+-----------------------------------
+
 timmers,
 events
 callback parameter
 
 
-json
+JSON
 _______________________________
 
 -convertir string de un JSON a objeto JS
 
              JSON.parse(string)
+
+- convertir JSON A objeto 
+
+             JSON.stringify(objeto)
+
+
+
+***********************************
+
+
+MODULO BUFFER
+
+
+es modulo global
+no necesita usar require()
+
+
+Al convertir buffers a stringhay que especificar el metodo de codificación(utf8,base64, etc)
+
+CREANDO buffers
+
+var buf256 = new Buffer(256);
+var bufOctets = new Buffer([0x6f, 0x63, 0x74, 0x65, 0x74, 0x73]);
+var bufUTF8 = new Buffer("Some UTF8 Text \u00b6 \u30c6 \u20ac", 'utf');
+
+
+
 
