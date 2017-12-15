@@ -8,7 +8,7 @@
  function sendResponse(weatherData, res){
         var page = '<html><head><title>External Example</title></head>' +
         '<body>' +
-        '<form method="post">' +
+        '<form method="post" accept-charset="utf-8">' +
         'City: <input name="city"><br>' +
         '<input type="submit" value="Get Weather">' +
         '</form>';
@@ -26,15 +26,18 @@
                       weatherData += chunk;
             });
             weatherResponse.on('end', function () {
+                    console.log(weatherData)
                     sendResponse(weatherData, res);
             });
  }
  function getWeather(city, res){
-        city = city.replace(' ', '-');
+        //city = city.replace(' ', '-');
         console.log(city);
         var options = {
-        host: 'api.openweathermap.org',
-        path: '/data/2.5/weather?q=' + city + '&APPID=' + APIKEY
+       // host: 'api.openweathermap.org',
+       host:'api.github.com',
+       // path: '/data/2.5/weather?q=' + city + '&APPID=' + APIKEY
+       path: '/users/JAreina/repos'
  };
  http.request(options, function(weatherResponse){
  parseWeather(weatherResponse, res);
@@ -52,6 +55,7 @@
         });
         req.on('end', function() {
                      var postParams = qstring.parse(reqData);
+                     console.log(reqData)
                     getWeather(postParams.city, res);
         });
         } else {
