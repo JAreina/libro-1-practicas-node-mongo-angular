@@ -1,0 +1,272 @@
+
+
+ARRANCA MONGO linux shell:
+
+sudo service mongod start
+mongo
+
+
+comandos :
+
+help <option>
+___________________
+
+Displays syntax help for MongoDB shell commands.
+The option argument allows you to specify an area where you want help.
+
+use <database>
+___________________
+
+ Changes the current database handle. Database
+operations are processed on the current database handle.
+db.help: Displays help options for the database methods.
+
+show <option>
+___________________
+
+ Shows a list based on the option argument. The
+            value of option can be:
+                 - dbs: Displays a list of databases.
+                 - collections: Displays a list of collections for the current database.
+                 - profile: Displays the five most recent system.profile entries taking more than 1 millisecond.
+                 - databases: Displays a list of all available databases.
+                 - roles: Displays a list of all roles for the current database, both built-in and user-defined.
+                 - users: Displays a list of all users for that database.
+
+
+exit
+___________________
+
+Exits the database.
+
+
+******************************
+
+FUNCIONES DE ADMINISTRACION
+http://docs.mongodb.org/manual/reference/method/#native
+
+
+- load(script)
+
+ Loads and runs a JavaScript file inside the shell. This is
+a great way to script operations for the database.
+
+- UUID(string)
+
+ Converts a 32-byte hex string into a BSON UUID.
+
+- db.auth(username, password)
+
+ Authenticates you to the current database.
+
+
+*******************************************************
+SCRIPTING shell_____________________________
+
+primera forma 
+
+                EJECUTAR DESDE TERMINAL linux
+                libros es una base de datos
+
+                devuelve las colecciones existentes en esa base.
+
+                $  mongo libros --eval "printjson(db.getCollectionNames())"
+
+segunda forma
+
+
+               load(script_path) 
+               load("/tmp/db_update.js")
+
+***********************************************************
+
+
+ADMINISTRAR USUARIOS
+
+
+****************************************************************
+User accounts are stored in the db.system.users collection of each database. The
+User object contains _id, user, pwd, roles, and sometimes
+otherDBRoles fields.
+
+
+CREAR USUARIO
+------------------------
+
+> use prueba;
+switched to db prueba
+> db.createUser({user:"juan", pwd:"prueba",roles:["readWrite","dbAdmin"]});
+
+Successfully added user: { "user" : "juan", "roles" : [ "readWrite", "dbAdmin" ] }
+
+
+ELIMINAR USUARIO
+..............................
+
+use baseDato;
+db.removeUser("nombreUsuario")
+
+
+CREAR USUARIO ADMINISTRADOR
+------------------------------------------------
+
+use admin
+db.createUser( { user: "<username>",
+pwd: "<password>",
+roles: [ "userAdminAnyDatabase" ] } )
+
+
+
+LISTAR BASES
+------------------
+
+show dbs;
+
+
+CAMBIAR DE BASES
+----------------------------
+
+db.getSiblingDB(database) method or the use <database>
+
+
+
+CREAR NUEVA BASE 
+----------------------------
+
+no hay comando explícito
+
+use nombreNuevaBase;
+
+
+AÑADIR NUEVA colecciones
+--------------------------------------
+
+use nombreNuevaBase;
+db.createCollection("nuevaColeccion");
+
+
+
+BORRAR BASE 
+--------------------
+
+
+use base;
+db.dropDatabase();
+
+COPIAR BASE
+------------------
+
+To create a copy of a database, you switch to that database and then use
+copyDatabase(origin, destination, [hostname]) to create a
+copy. The origin parameter is a string specifying the name of the database to
+copy. The destination parameter specifies the name of the database to
+create on this MongoDB server. The optional hostname parameter specifies a
+hostname of the origin database MongoDB server if you are copying a database
+from a different host. 
+
+
+
+db.copyDatabase('customers', 'customers_archive')
+
+
+
+*****************************************************+
+***************** COLLECTIONES ************************
+
+
+
+LISTAR DE UNA BASE
+-----------------------------
+
+
+use base;
+show collections;
+
+
+CREAR COLLECTIONES
+-------------------------------
+
+createCollection(name, [options])
+
+db.createCollection("nueva");
+
+
+
+BORRAR COLLECTIONES
+----------------------------------
+
+to switch to the correct
+database, get the collection object, and then call the drop() function on that
+object.
+
+
+use base;
+show collections;
+coll = db.getCollection("nombrecolecci")
+coll.drop()
+show collections
+
+
+BUSCAR DOCUMENTO EN nuevaColeccion
+_____________________________________________
+
+
+
+use libros
+c = db.getCollection("usuarios")
+c = db.getCollection("usuarios");c.find().pretty();
+
+c.find({nombre:"maria"});
+
+
+
+AÑADIR DOCUMENTO A COLLECTIONES
+---------------------------------------------------------
+
+use testDB
+coll = db.getCollection("newCollection")
+coll.find()
+coll.insert({ vehicle: "plane", speed: "480mph" })
+coll.insert({ vehicle: "car", speed: "120mph" })
+coll.insert({ vehicle: "train", speed: "120mph" })
+coll.find()
+
+
+
+BORRAR DOCUMENT DE nuevaColeccion
+-----------------------------------------------------------
+
+use testDB
+coll = db.getCollection("newCollection")
+coll.find()
+coll.remove({vehicle: "plane"})
+coll.find()
+
+
+UPDATE 
+
+-----------------
+
+
+use testDB
+coll = db.getCollection("newCollection")
+coll.find()
+coll.update({ speed: "120mph" },
+{ $set: { speed: "150mph" , updated: true } },
+{ upsert: false, multi: true })
+coll.save({ "_id" : ObjectId("52a0caf33120fa0d0e424ddb"),
+"vehicle" : "plane", "speed" : "500mph" })
+coll.find()
+
+
+
+
+
+
+
+
+
+
+
+
+
