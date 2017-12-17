@@ -1,0 +1,24 @@
+
+>use nueva;
+ >db.getCollection('nebulae').find().pretty();
+{
+	"_id" : ObjectId("5a3681b882d7d5186bf2f30f"),
+	"ngc" : "NGC 7293",
+	"name" : "Helix",
+	"type" : "planetary",
+	"location" : "Aquila"
+}
+{
+	"_id" : ObjectId("5a3681b882d7d5186bf2f310"),
+	"ngc" : "NGC 6543",
+	"name" : "Cat's Eye",
+	"type" : "planetary",
+	"location" : "Draco"
+}
+{
+	"_id" : ObjectId("5a3681b882d7d5186bf2f311"),
+	"ngc" : "NGC 1952",
+	"name" : "Crab",
+	"type" : "supernova",
+	"location" : "Taurus"
+}
